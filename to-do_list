@@ -1,0 +1,90 @@
+def main():
+    #Print out message greeting user
+    print("Hello welcome to your to-do list")
+    #This is the store the tasks and finsihed tasks in a empty list
+    tasks = []
+    finished_tasks = []
+    # While loop with different tasks, keep looping until user exits
+    while True:
+        ask_option = int(input("What would you like to do:\n"
+                           "1. Add Task \n"
+                           "2. Delete Task \n"
+                           "3. View Task \n"
+                           "4. Mark as Done \n"
+                            "5. Save tasks \n"
+                            "6. Load tasks \n"
+                            "7. Exit \n"
+                            "What is your option:\n"))
+        # if 1, add that task (append) to the empty task list
+        if ask_option == 1:
+            option_one = input("What task would you like to add: ")
+            tasks.append(option_one)
+            print(f"Nice! You have added {option_one} to your to-do list")
+
+        elif ask_option == 2:
+            option_two = input("What task would you like to delete: ")
+            #To check if element is in list, use "in", if in task, remove from task list
+            if option_two in tasks:
+                tasks.remove(option_two)
+                print(f"You have removed {option_two} from the list")
+            else:
+                print("That task is not on the list")
+
+        #Print out either one list, tasks list or finsihed tasks list
+        elif ask_option == 3:
+            option_three = input("Which tasks do you want to see, tasks or finsihed tasks: ")
+            if option_three.lower() == "tasks":
+                print(f"Here is the list of tasks, {tasks}")
+            elif option_three.lower() == "finished tasks":
+                print(f"Here is your finsihed tasks, {finished_tasks}")
+            else:
+                print("Not an option")
+                break
+
+        #Move tasks to finsihed tasks, remove from tasks list and add to finsihed tasks list
+        elif ask_option == 4:
+            option_four = input("What tasks would you want to mark as done: ")
+            if option_four in tasks:
+                print(f"Task, {tasks}, has been moved to finsihed tasks since you have done it")
+                tasks.remove(option_four)
+                finished_tasks.append(option_four)
+            else:
+                print("That is not a task on your list")
+
+        #Save the tasks/finsihed tasks into a text file
+        elif ask_option == 5:
+            print("I will save these tasks onto a seperate file called, Save tasks.")
+            with open("Save tasks.txt", "w") as file:
+                file.write("Tasks: \n" + "\n".join(tasks) + "\n")
+                file.write("Finished tasks: \n" + "\n".join(finished_tasks) + "\n")
+
+        #Read out the tasks/finsihed tasks from the text file
+        elif ask_option == 6:
+            print("Loading up the saved tasks")
+            with open("Save tasks.txt", "r") as file:
+                # Read all lines from the file
+                content = file.read().splitlines()
+                print("Here is the tasks stored:", content)
+
+                if not content:
+                    print("File is empty")
+
+        #Ask again if you want to exit the loop
+        elif ask_option == 7:
+            ask_again = input("Are you sure: ")
+            if ask_again.lower() == "yes":
+                print("Ok come again")
+                break
+            elif ask_again.lower() == "no":
+                print("Ok no problem, back to menu")
+                continue
+            else:
+                print("Not an option")
+
+        else:
+            print("That isn't an option, try again")
+
+
+
+if __name__ == "__main__":
+    main()
